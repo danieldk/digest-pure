@@ -1,17 +1,33 @@
 {-# LANGUAGE BangPatterns #-}
 
+-- |
+-- Module      : Data.Digest.Pure.Adler32
+-- Copyright   : (c) 2011 Daniël de Kok
+-- License     : BSD3
+--
+-- Maintainer  : Daniël de Kok <me@danieldk.eu>
+-- Stability   : experimental
+--
+-- This module provides functions to calculate Adler32 checksums.
+
 module Data.Digest.Pure.Adler32 (
-  Adler32,
-  adler32,
-  adler32Update
+  Adler32(..)
 ) where
 
 import Data.Bits ((.&.), (.|.), shiftL, shiftR)
 import qualified Data.ByteString as B
 import Data.Word (Word8, Word32)
 
+-- |
+-- The class of values for which Adler32 checksums can be computed.
 class Adler32 a where
+  -- |
+  -- Compute the Adler32 checksum.
   adler32       :: a -> Word32
+  -- |
+  -- Incrementally update an Adler32 checksum. The Adler32 checksum of one
+  -- /A/ updated with /B/, equals the checksum of the concatenation of /A/ and
+  -- /B/.
   adler32Update :: Word32 -> a -> Word32
 
 data AdlerState = AdlerState {-# UNPACK #-} !Word32  {-# UNPACK #-} !Word32
