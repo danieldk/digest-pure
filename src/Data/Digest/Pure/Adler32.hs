@@ -1,6 +1,10 @@
 {-# LANGUAGE BangPatterns #-}
 
-module Data.Digest.Pure.Adler32 () where
+module Data.Digest.Pure.Adler32 (
+  Adler32,
+  adler32,
+  adler32Update
+) where
 
 import Data.Bits ((.&.), (.|.), shiftL, shiftR)
 import qualified Data.ByteString as B
