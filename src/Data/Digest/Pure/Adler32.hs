@@ -17,6 +17,7 @@ module Data.Digest.Pure.Adler32 (
 import Data.Bits ((.&.), (.|.), shiftL, shiftR)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BL
+import Data.Int (Int64)
 import Data.Word (Word8, Word32)
 
 -- |
@@ -44,16 +45,21 @@ instance Adler32 BS.ByteString where
 adler32Initial :: Word32
 adler32Initial = 1
 
+adler32Base :: Word32
+adler32Base = 65521
+
+adler32Nmax :: Int64
+adler32Nmax = 5552
+
 adler32Update' :: Word32 -> BL.ByteString -> Word32
 adler32Update' adlerState =
   combineAdler . loop (breakAdler adlerState)
   where
-    nmax = 5552
     loop adlerState' str
       | BL.null xs = adlerState'
-      | otherwise = loop (adler32Chunk adlerState' xs) ys
+      | otherwise  = loop (adler32Chunk adlerState' xs) ys
         where
-          (xs, ys) = BL.splitAt nmax str
+          (xs, ys) = BL.splitAt adler32Nmax str
 
 adler32Chunk :: AdlerState -> BL.ByteString -> AdlerState
 adler32Chunk adler =
@@ -65,7 +71,7 @@ breakAdler adler =
 
 combineAdler :: AdlerState -> Word32
 combineAdler (AdlerState a b) =
-  (b `shiftL` 16) .|. a
+  a .|. (b `shiftL` 16)
 
 sumAdler :: AdlerState -> Word8 -> AdlerState
 sumAdler (AdlerState a b) !byte = AdlerState newA (sumB b newA)
@@ -82,5 +88,5 @@ sumB !adlerB !adlerA = adlerB + adlerA
 
 modAdler :: AdlerState -> AdlerState
 modAdler (AdlerState adlerA adlerB) =
-  AdlerState (adlerA `mod` 65521) (adlerB `mod` 65521)
+  AdlerState (adlerA `mod` adler32Base) (adlerB `mod` adler32Base)
 
