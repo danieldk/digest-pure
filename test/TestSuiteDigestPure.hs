@@ -13,7 +13,7 @@ import Text.Printf
 
 instance Arbitrary B.ByteString where
   arbitrary = do
-    n <- choose (1, 10000000)
+    n <- choose (1, 1000000)
     l <- vector n
     return $ B.pack l
 
