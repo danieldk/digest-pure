@@ -12,7 +12,7 @@ This is a pure Haskell implementation of the
 
 ## Benchmarks
 
-Benchmarked on a Mac Mini 2010, 2.4GHz, using lazy *ByteString*s, best out
+Benchmarked on a Mac Mini 2010, 2.4GHz, using *Data.ByteString.Lazy*, best out
 of five.
 
 ### adler32
