@@ -17,7 +17,7 @@ of five.
 
 ### adler32
 
-    $ time ./adler32 ~/Downloads/os_x_lion_10.7.2_update_11c40.dmg 
+    $ time ./adler32 data 
     165386662
 
     real  0m0.447s
