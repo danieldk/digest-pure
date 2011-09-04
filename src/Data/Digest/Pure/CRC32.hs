@@ -1,3 +1,15 @@
+{-# LANGUAGE BangPatterns #-}
+
+-- |
+-- Module      : Data.Digest.Pure.CRC32
+-- Copyright   : (c) 2011 Daniël de Kok
+-- License     : BSD3
+--
+-- Maintainer  : Daniël de Kok <me@danieldk.eu>
+-- Stability   : experimental
+--
+-- This module provides functions to calculate CRC32 checksums.
+
 module Data.Digest.Pure.CRC32 (
   CRC32(..)
 ) where
