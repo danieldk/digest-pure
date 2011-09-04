@@ -74,6 +74,7 @@ combineAdler (AdlerState a b) =
   a .|. (b `shiftL` 16)
 
 sumAdler :: AdlerState -> Word8 -> AdlerState
+{-# INLINE sumAdler #-}
 sumAdler (AdlerState a b) !byte = AdlerState newA (sumB b newA)
   where
     newA = sumA a byte
