@@ -30,12 +30,27 @@ succesful _               = False
 
 tests = [
   ("adler32CompareZlib", quickCheckResult adler32CompareZlib),
-  ("crc32CompareZlib",   quickCheckResult crc32CompareZlib) ]
+  ("adler32Update",      quickCheckResult adler32Update),
+  ("crc32CompareZlib",   quickCheckResult crc32CompareZlib),
+  ("crc32Update",        quickCheckResult crc32Update) ]
 
 adler32CompareZlib :: B.ByteString -> Bool
 adler32CompareZlib str =
   AP.adler32 str == A.adler32 str
 
+adler32Update :: B.ByteString -> B.ByteString -> Bool
+adler32Update str1 str2 =
+  AP.adler32 strConcat == AP.adler32Update (AP.adler32 str1) str2
+  where
+    strConcat = B.append str1 str2
+
 crc32CompareZlib :: B.ByteString -> Bool
 crc32CompareZlib str =
   CP.crc32 str == C.crc32 str
+
+crc32Update :: B.ByteString -> B.ByteString -> Bool
+crc32Update str1 str2 =
+  CP.crc32 strConcat == CP.crc32Update (CP.crc32 str1) str2
+  where
+    strConcat = B.append str1 str2
+
