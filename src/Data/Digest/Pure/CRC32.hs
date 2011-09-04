@@ -17,6 +17,7 @@ module Data.Digest.Pure.CRC32 (
 import Data.Bits ((.&.), shiftR, xor)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BL
+import Data.Array.Base (unsafeAt)
 import Data.Array.Unboxed
 import Data.Word (Word8, Word32)
 
@@ -51,9 +52,15 @@ crc32Step :: Word32 -> Word8 -> Word32
 crc32Step prevCRC c =
   flipAll (tblEntry `xor` (crc `shiftR` 8))
   where
-    tblEntry = crc32Table ! ((crc `xor` (fromIntegral c)) .&. 0xff)
+    -- Note: unsafe access is ok here, we guarantee that the value is within
+    -- (0..255), crc32Table covers that range.
+    tblEntry = crc32Table !!! ((crc `xor` (fromIntegral c)) .&. 0xff)
     crc = flipAll prevCRC 
     flipAll = xor 0xffffffff
+
+-- | Unsafe array access.
+(!!!) :: (IArray a e, Ix i, Integral i) => a i e -> i -> e
+arr !!! i = unsafeAt arr $ fromIntegral i
 
 -- CRC table, generated using make_crc_table from zlib
 crc32Table :: UArray Word32 Word32 
