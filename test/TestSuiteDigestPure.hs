@@ -1,8 +1,11 @@
+{-# LANGUAGE DoAndIfThenElse #-}
+
 module Main where
 
 import qualified Data.ByteString.Lazy as B
 import qualified Data.Digest.Adler32 as A
 import qualified Data.Digest.Pure.Adler32 as AP
+import System.Exit
 import Test.QuickCheck
 import Text.Printf
 
@@ -12,13 +15,19 @@ instance Arbitrary B.ByteString where
     l <- vector n
     return $ B.pack l
 
-main = mapM_ (\(s, a) -> printf "%-25s: " s >> a) tests
+main = do
+  results <- mapM (\(s, a) -> printf "%-25s: " s >> a) tests
+  if all succesful results then
+    exitSuccess
+  else
+    exitFailure
 
-tests = [("aldler32CompareZlib",  quickCheck adler32CompareZlib)]
+succesful :: Result -> Bool
+succesful (Success _ _ _) = True
+succesful _               = False
+
+tests = [("aldler32CompareZlib",  quickCheckResult adler32CompareZlib)]
 
 adler32CompareZlib :: B.ByteString -> Bool
 adler32CompareZlib str =
-  adler32Pure == adler32
-  where
-    adler32Pure = AP.adler32 str
-    adler32     = A.adler32  str
+  AP.adler32 str == A.adler32 str
