@@ -3,7 +3,7 @@
 -- |
 -- Module      : Data.Digest.Pure.CRC32
 -- Copyright   : (c) 2011 Daniël de Kok
--- License     : BSD3
+-- License     : OtherLicense
 --
 -- Maintainer  : Daniël de Kok <me@danieldk.eu>
 -- Stability   : experimental

@@ -1,14 +1,22 @@
 Name:               digest-pure
 Version:            0.0.1
-License:            BSD3
+License:            OtherLicense
+License-file:       LICENSE
 Copyright:          Copyright 2011 Daniël de Kok
 Maintainer:         Daniël de Kok <me@danieldk.eu>
 Author:             Daniël de Kok <me@danieldk.eu>
+Homepage:           http://github.com/danieldk/digest-pure
 Category:           Cryptography
 Synopsis:           Pure hash functions for bytestrings
-Description:        This package provides pure hash functions for bytestrings.
+Description:        This package provides pure hash functions for bytestrings,
+                    implementing the same interface as the 'digest' package.
 Build-Type:         Simple
-Cabal-Version:      >= 1.4
+Cabal-Version:      >= 1.8
+
+Source-Repository head
+  type:                 git
+  location:             git@github.com:danieldk/digest-pure.git
+
 
 Library
   Build-Depends:        base >= 4 && < 5, bytestring >= 0.9.1.10 && < 0.9.2,
