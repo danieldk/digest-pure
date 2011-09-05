@@ -8,8 +8,23 @@ Author:             Daniël de Kok <me@danieldk.eu>
 Homepage:           http://github.com/danieldk/digest-pure
 Category:           Cryptography
 Synopsis:           Pure hash functions for bytestrings
-Description:        This package provides pure hash functions for bytestrings,
-                    implementing the same interface as the 'digest' package.
+Description:        This package provides pure hash functions for pure and lazy
+                    bytestrings, implementing the same interface as the /digest/
+                    package.
+                    .
+                    For efficiency, use the /digest/ package, which provides
+                    FFI bindings to efficient code from zlib, instead.
+                    .
+                    Performance compared to 'Data.Digest' on a Mac Mini 2010,
+                    2.4GHz Core 2 Duo, using 'Data.ByteString.Lazy.ByteString':
+                    .
+                    * Data.Digest.Pure.Adler32: 380 MB/s
+                    .
+                    * Data.Digest.Adler32: 4906 MB/s
+                    .
+                    * Data.Digest.Pure.CRC32: 232 MB/s
+                    .
+                    * Data.Digest.CRC32: 774 MB/s
 Build-Type:         Simple
 Cabal-Version:      >= 1.8
 
