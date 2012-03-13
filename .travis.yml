@@ -1,0 +1,5 @@
+language: haskell
+
+install:
+  - cabal update
+  - PATH="$HOME/.cabal/bin:$PATH" cabal install
